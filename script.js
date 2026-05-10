@@ -140,6 +140,24 @@ if (shTiles.length) {
   });
 }
 
+/* hero collage: click a card to bring it to the front */
+const collage = document.querySelector('.hero-collage');
+if (collage) {
+  const cards = Array.from(collage.querySelectorAll('.collage-card'));
+  let top = cards.length;
+  cards.forEach(c => { c.style.cursor = 'pointer'; c.style.transition = 'transform .35s ease, z-index 0s'; });
+  cards.forEach(card => {
+    card.addEventListener('click', () => {
+      cards.forEach(c => { if (c !== card) c.style.zIndex = String(parseInt(c.style.zIndex || getComputedStyle(c).zIndex) - 1 || 1); });
+      top += 1;
+      card.style.zIndex = String(top);
+      const r = (Math.random() * 8 - 4).toFixed(1);
+      card.style.transform = `rotate(${r}deg) translateY(-6px)`;
+      setTimeout(() => { card.style.transform = ''; }, 350);
+    });
+  });
+}
+
 /* tap-and-bounce on workshop cards (mobile delight) */
 if (!reduced && 'ontouchstart' in window) {
   document.querySelectorAll('.ws-card, .ws-tile, .shop-card, .mosaic .tile').forEach(el => {
