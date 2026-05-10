@@ -141,11 +141,7 @@ main, header, footer { position: relative; z-index: 2; }
   width: 42px; height: 42px;
   flex: 0 0 auto;
   border-radius: 50%;
-  background: var(--mint);
-  background-image:
-    radial-gradient(circle at 32% 30%, rgba(255,255,255,.6), rgba(255,255,255,0) 55%),
-    repeating-linear-gradient(122deg, transparent 0 8px, rgba(255,255,255,.7) 8px 9px),
-    repeating-linear-gradient(40deg, transparent 0 9px, rgba(255,255,255,.45) 9px 10px);
+  background: url('images/logo.png') center/cover no-repeat;
 }
 
 .nav {
@@ -1001,7 +997,7 @@ section.block.dark .section-head .side { color: #c8d2d4; }
 .foot-grid li { margin-bottom: 8px; }
 .foot-grid a:hover { color: var(--mint); }
 .foot-brand .brand { color: var(--cream); margin-bottom: 18px; }
-.foot-brand .brand-mark { background: var(--mint); }
+.foot-brand .brand-mark { background: url('images/logo.png') center/cover no-repeat var(--mint); }
 .foot-brand p { color: #98a3a5; font-size: 14.5px; max-width: 28em; }
 
 .foot-bottom {
