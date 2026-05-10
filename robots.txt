@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /terms.html
+
+Sitemap: https://www.mintbox.hk/sitemap.xml

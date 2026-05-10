@@ -1,0 +1,8 @@
+/book-online        /workshops.html        301
+/book-online/*      /workshops.html        301
+/about              /about.html            301
+/contact            /contact.html          301
+/client-showcase    /showcase.html         301
+/shop/*             /shop.html             301
+/terms-conditions   /terms.html            301
+/gift-card          /contact.html          301

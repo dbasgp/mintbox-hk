@@ -1,0 +1,18 @@
+{
+  "name": "The Mint Box Studio",
+  "domains": ["mintbox.hk", "www.mintbox.hk", "mintbox.com.hk", "www.mintbox.com.hk"],
+  "legacy_domain": "themintboxstudio.com",
+  "default_locale": "en",
+  "locales": ["en"],
+  "focus": "Crochet & knitting workshop studio · Sheung Wan, Hong Kong",
+  "founder": "Annie Wong",
+  "based_in": "Hong Kong",
+  "contacts": {
+    "email": "themintboxstudio@gmail.com",
+    "whatsapp": "+85261776949",
+    "instagram": "@themintboxstudio",
+    "facebook": "themintboxstudio",
+    "address": "Unit 3, 2/F Bonham Commercial Centre, 44-46 Bonham Strand West, Sheung Wan, Hong Kong"
+  },
+  "notes": "Content rebuilt from a crawl of www.themintboxstudio.com. Pricing list as of crawl date 2026-05-10. Hero placeholder cards and showcase tiles use coloured placeholders — replace with real photography when client supplies imagery."
+}
