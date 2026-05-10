@@ -82,6 +82,58 @@ if (cform) {
   });
 }
 
+/* showcase: press-and-hold a tile to peek at full size */
+const shTiles = document.querySelectorAll('.sh-tile');
+if (shTiles.length) {
+  const HOLD_MS = 160;
+  shTiles.forEach(tile => {
+    let timer = null;
+    let startX = 0, startY = 0;
+    let active = false;
+
+    const peek = () => {
+      active = true;
+      tile.classList.add('peek');
+      const v = tile.querySelector('video');
+      if (v) { try { v.currentTime = 0; v.play().catch(()=>{}); } catch(_){} }
+    };
+    const release = () => {
+      clearTimeout(timer);
+      if (!active) return;
+      active = false;
+      tile.classList.remove('peek');
+      const v = tile.querySelector('video');
+      if (v) { try { v.pause(); } catch(_){} }
+    };
+
+    tile.addEventListener('mousedown', (e) => {
+      if (e.button !== 0) return;
+      clearTimeout(timer);
+      timer = setTimeout(peek, HOLD_MS);
+    });
+    tile.addEventListener('mouseup', release);
+    tile.addEventListener('mouseleave', release);
+
+    tile.addEventListener('touchstart', (e) => {
+      const t = e.touches[0];
+      startX = t.clientX; startY = t.clientY;
+      clearTimeout(timer);
+      timer = setTimeout(peek, HOLD_MS);
+    }, { passive: true });
+    tile.addEventListener('touchmove', (e) => {
+      const t = e.touches[0];
+      if (Math.abs(t.clientX - startX) > 8 || Math.abs(t.clientY - startY) > 8) {
+        release();
+      }
+    }, { passive: true });
+    tile.addEventListener('touchend', release);
+    tile.addEventListener('touchcancel', release);
+
+    tile.addEventListener('contextmenu', (e) => e.preventDefault());
+    tile.addEventListener('dragstart', (e) => e.preventDefault());
+  });
+}
+
 /* tap-and-bounce on workshop cards (mobile delight) */
 if (!reduced && 'ontouchstart' in window) {
   document.querySelectorAll('.ws-card, .ws-tile, .shop-card, .mosaic .tile').forEach(el => {
