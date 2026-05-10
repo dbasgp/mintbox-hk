@@ -46,10 +46,10 @@ if (!reduced && 'IntersectionObserver' in window) {
   targets.forEach(el => io.observe(el));
 }
 
-/* gentle scroll parallax for ambient crochet motifs */
+/* candy yarn balls drift gently on scroll */
 if (!reduced && ambient) {
   const balls = ambient.querySelectorAll('.ball');
-  const rates = [0.10, -0.07, 0.12, -0.09, 0.06, -0.11, 0.08, -0.06];
+  const rates = [0.20, -0.14, 0.24, -0.18, 0.12, -0.22, 0.16, -0.10];
   let ticking = false;
   const update = () => {
     const y = window.scrollY;
@@ -63,20 +63,6 @@ if (!reduced && ambient) {
     if (!ticking) { requestAnimationFrame(update); ticking = true; }
   }, { passive: true });
   update();
-}
-
-/* click any ambient crochet motif for a playful pop */
-if (ambient) {
-  ambient.querySelectorAll('.ball').forEach(b => {
-    b.addEventListener('click', () => {
-      b.classList.remove('popping');
-      void b.offsetWidth; /* restart animation */
-      b.classList.add('popping');
-    });
-    b.addEventListener('animationend', (e) => {
-      if (e.animationName === 'ball-pop') b.classList.remove('popping');
-    });
-  });
 }
 
 /* contact form — graceful mailto fallback */
