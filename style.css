@@ -790,13 +790,23 @@ section.block.dark .section-head .side { color: #c8d2d4; }
   z-index: 100;
   padding: 24px;
   opacity: 0;
-  transition: opacity .25s ease;
+  transition: opacity .25s ease, background .2s ease;
   cursor: zoom-out;
 }
 .sh-lightbox.open {
   display: flex;
   opacity: 1;
 }
+/* don't dim the screen behind HDR-capable videos — keep the surroundings
+   bright so the OS doesn't tone-map / lower brightness */
+.sh-lightbox.video {
+  background: rgba(255, 254, 251, 0.88);
+}
+.sh-lightbox.video .sh-close {
+  background: rgba(20, 30, 35, 0.18);
+  color: var(--ink);
+}
+.sh-lightbox.video .sh-close:hover { background: rgba(20, 30, 35, 0.32); }
 .sh-lightbox img,
 .sh-lightbox video {
   max-width: min(96vw, 1400px);

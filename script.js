@@ -96,7 +96,7 @@ if (shTiles.length) {
   const closeBtn = lb.querySelector('.sh-close');
 
   const close = () => {
-    lb.classList.remove('open');
+    lb.classList.remove('open', 'video');
     document.body.classList.remove('sh-locked');
     stage.innerHTML = '';
   };
@@ -113,11 +113,13 @@ if (shTiles.length) {
       big.playsInline = true;
       big.loop = true;
       stage.appendChild(big);
+      lb.classList.add('video');
     } else if (img) {
       const big = document.createElement('img');
       big.src = img.getAttribute('src');
       big.alt = img.getAttribute('alt') || '';
       stage.appendChild(big);
+      lb.classList.remove('video');
     }
     lb.classList.add('open');
     document.body.classList.add('sh-locked');
