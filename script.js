@@ -82,55 +82,59 @@ if (cform) {
   });
 }
 
-/* showcase: press-and-hold a tile to peek at full size */
+/* showcase: click any tile to open it big in a lightbox */
 const shTiles = document.querySelectorAll('.sh-tile');
 if (shTiles.length) {
-  const HOLD_MS = 160;
+  let lb = document.querySelector('.sh-lightbox');
+  if (!lb) {
+    lb = document.createElement('div');
+    lb.className = 'sh-lightbox';
+    lb.innerHTML = '<button class="sh-close" aria-label="Close">×</button><div class="sh-stage"></div>';
+    document.body.appendChild(lb);
+  }
+  const stage = lb.querySelector('.sh-stage');
+  const closeBtn = lb.querySelector('.sh-close');
+
+  const close = () => {
+    lb.classList.remove('open');
+    document.body.classList.remove('sh-locked');
+    stage.innerHTML = '';
+  };
+
+  const open = (tile) => {
+    stage.innerHTML = '';
+    const v = tile.querySelector('video');
+    const img = tile.querySelector('img');
+    if (v) {
+      const big = document.createElement('video');
+      big.src = v.getAttribute('src');
+      big.controls = true;
+      big.autoplay = true;
+      big.playsInline = true;
+      big.loop = true;
+      stage.appendChild(big);
+    } else if (img) {
+      const big = document.createElement('img');
+      big.src = img.getAttribute('src');
+      big.alt = img.getAttribute('alt') || '';
+      stage.appendChild(big);
+    }
+    lb.classList.add('open');
+    document.body.classList.add('sh-locked');
+  };
+
   shTiles.forEach(tile => {
-    let timer = null;
-    let startX = 0, startY = 0;
-    let active = false;
-
-    const peek = () => {
-      active = true;
-      tile.classList.add('peek');
-      const v = tile.querySelector('video');
-      if (v) { try { v.currentTime = 0; v.play().catch(()=>{}); } catch(_){} }
-    };
-    const release = () => {
-      clearTimeout(timer);
-      if (!active) return;
-      active = false;
-      tile.classList.remove('peek');
-      const v = tile.querySelector('video');
-      if (v) { try { v.pause(); } catch(_){} }
-    };
-
-    tile.addEventListener('mousedown', (e) => {
-      if (e.button !== 0) return;
-      clearTimeout(timer);
-      timer = setTimeout(peek, HOLD_MS);
-    });
-    tile.addEventListener('mouseup', release);
-    tile.addEventListener('mouseleave', release);
-
-    tile.addEventListener('touchstart', (e) => {
-      const t = e.touches[0];
-      startX = t.clientX; startY = t.clientY;
-      clearTimeout(timer);
-      timer = setTimeout(peek, HOLD_MS);
-    }, { passive: true });
-    tile.addEventListener('touchmove', (e) => {
-      const t = e.touches[0];
-      if (Math.abs(t.clientX - startX) > 8 || Math.abs(t.clientY - startY) > 8) {
-        release();
-      }
-    }, { passive: true });
-    tile.addEventListener('touchend', release);
-    tile.addEventListener('touchcancel', release);
-
+    tile.addEventListener('click', () => open(tile));
     tile.addEventListener('contextmenu', (e) => e.preventDefault());
     tile.addEventListener('dragstart', (e) => e.preventDefault());
+  });
+
+  lb.addEventListener('click', (e) => {
+    if (e.target === lb || e.target === stage) close();
+  });
+  closeBtn.addEventListener('click', close);
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && lb.classList.contains('open')) close();
   });
 }
 
