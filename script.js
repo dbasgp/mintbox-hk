@@ -30,10 +30,6 @@ if (header) {
   window.addEventListener('scroll', onScroll, { passive: true });
 }
 
-/* light up ambient yarn balls */
-const ambient = document.querySelector('.ambient');
-if (ambient) requestAnimationFrame(() => requestAnimationFrame(() => ambient.classList.add('lit')));
-
 /* reveal on scroll */
 const targets = document.querySelectorAll('.hero-grid, .about-grid, .ws-rail, .shop-grid, .mosaic, .brand-rail, .quote, .contact-grid, .ws-group, .section-head, .page-hero');
 if (!reduced && 'IntersectionObserver' in window) {
@@ -44,25 +40,6 @@ if (!reduced && 'IntersectionObserver' in window) {
     });
   }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
   targets.forEach(el => io.observe(el));
-}
-
-/* candy yarn balls drift gently on scroll */
-if (!reduced && ambient) {
-  const balls = ambient.querySelectorAll('.ball');
-  const rates = [0.20, -0.14, 0.24, -0.18, 0.12, -0.22, 0.16, -0.10];
-  let ticking = false;
-  const update = () => {
-    const y = window.scrollY;
-    balls.forEach((b, i) => {
-      const dy = (y * rates[i % rates.length]).toFixed(1);
-      b.style.transform = `translate3d(0, ${dy}px, 0)`;
-    });
-    ticking = false;
-  };
-  window.addEventListener('scroll', () => {
-    if (!ticking) { requestAnimationFrame(update); ticking = true; }
-  }, { passive: true });
-  update();
 }
 
 /* contact form — graceful mailto fallback */
